@@ -14,5 +14,4 @@ public class OrderDetailDTO {
     private Long productID;
     private Integer quantity;
     private String color;
-    private Float price;
 }

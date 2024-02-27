@@ -52,8 +52,12 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST,"/api/products").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET,"/api/products/*").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
 
-                        .requestMatchers("/api/order-details").permitAll()
-                        .requestMatchers("/api/orders").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/orders").hasAnyAuthority("ROLE_ADMIN")
+
+                        .requestMatchers(HttpMethod.GET,"/api/order-details").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/api/order-details").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/api/order-details/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+
                         .requestMatchers("/api/auth/*").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/swagger-ui.html").permitAll()
