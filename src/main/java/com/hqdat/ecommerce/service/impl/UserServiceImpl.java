@@ -4,6 +4,7 @@ import com.hqdat.ecommerce.dto.UserDTO;
 import com.hqdat.ecommerce.model.Role;
 import com.hqdat.ecommerce.model.User;
 import com.hqdat.ecommerce.repository.RoleRepository;
+import com.hqdat.ecommerce.repository.UserRepository;
 import com.hqdat.ecommerce.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
 
-    public UserServiceImpl(RoleRepository roleRepository) {
+    public UserServiceImpl(RoleRepository roleRepository, UserRepository userRepository) {
         this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
     }
 
     public User convertDTO(UserDTO userDTO) {
@@ -37,7 +40,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByID(Long userID) {
-        return null;
+        return userRepository.findById(userID)
+                .orElseThrow(() -> new RuntimeException("User not found with id user: " + userID));
     }
 
     @Override
