@@ -1,8 +1,11 @@
 package com.hqdat.ecommerce.service.impl;
 
 import com.hqdat.ecommerce.dto.OrderDTO;
+import com.hqdat.ecommerce.exception.notfound.NotFoundException;
 import com.hqdat.ecommerce.model.Order;
+import com.hqdat.ecommerce.model.User;
 import com.hqdat.ecommerce.repository.OrderRepository;
+import com.hqdat.ecommerce.repository.UserRepository;
 import com.hqdat.ecommerce.service.OrderService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,31 +14,32 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    private final UserRepository userRepository;
+
+    public OrderServiceImpl(OrderRepository orderRepository, UserRepository userRepository) {
         this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
     }
 
     public Order convertDTO(OrderDTO orderDTO) {
-        Order newOrder = Order
+
+        User existingUser = userRepository.findById(orderDTO.getUserID())
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        return Order
                 .builder()
-                .address(orderDTO.getAddress())
+                .user(existingUser)
                 .shippingDate(orderDTO.getShippingDate())
-                .email(orderDTO.getEmail())
                 .fullName(orderDTO.getFullName())
                 .note(orderDTO.getNote())
                 .paymentMethod(orderDTO.getPaymentMethod())
-                .phoneNumber(orderDTO.getPhoneNumber())
-                .shippingAddress(orderDTO.getShippingAddress())
                 .shippingDate(orderDTO.getShippingDate())
                 .shippingMethod(orderDTO.getShippingMethod())
                 .totalMoney(orderDTO.getTotalMoney())
-                .trackingNumber(orderDTO.getTrackingNumber())
                 .active(orderDTO.isActive())
                 .build();
-
-        return newOrder;
     }
 
     @Override
@@ -48,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order getOrderByID(Long OrderID) {
         return orderRepository.findById(OrderID)
-                .orElseThrow(() -> new RuntimeException("Order not found!!"));
+                .orElseThrow(() -> new NotFoundException("Order not found!!"));
     }
 
     @Override

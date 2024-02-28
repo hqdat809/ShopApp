@@ -3,6 +3,7 @@ package com.hqdat.ecommerce.controller;
 import com.hqdat.ecommerce.dto.OrderDetailDTO;
 import com.hqdat.ecommerce.model.OrderDetail;
 import com.hqdat.ecommerce.service.OrderDetailService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,13 +29,13 @@ public class OrderDetailController {
         return ResponseEntity.ok(orderDetailService.getOrderDetailByID(id));
     }
 
-    @GetMapping("/by-user/{userId}")
-    public ResponseEntity<List<OrderDetail>> getOrderDetailByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(orderDetailService.getOrderDetailsByUser(userId));
-    }
-
     @GetMapping("/by-order/{orderId}")
     public ResponseEntity<List<OrderDetail>> getOrderDetailByOrder(@PathVariable Long orderId) {
         return ResponseEntity.ok(orderDetailService.getOrderDetailsByOrder(orderId));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<OrderDetail> updateOrderDetail(@PathVariable Long id, @RequestBody OrderDetailDTO orderDetailDTO) {
+        return ResponseEntity.ok(orderDetailService.updateOrderDetail(id, orderDetailDTO));
     }
 }

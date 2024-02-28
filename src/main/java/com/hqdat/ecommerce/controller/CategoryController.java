@@ -3,7 +3,9 @@ package com.hqdat.ecommerce.controller;
 import com.hqdat.ecommerce.dto.CategoryDTO;
 import com.hqdat.ecommerce.model.Category;
 import com.hqdat.ecommerce.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +21,7 @@ public class CategoryController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Category> createCategory(@RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<Category> createCategory(@RequestBody @Valid CategoryDTO categoryDTO) {
         Category category = categoryService.createCategory(categoryDTO);
         return ResponseEntity.ok(category);
     }
@@ -37,7 +39,7 @@ public class CategoryController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody @Valid CategoryDTO categoryDTO) {
         Category updatedCategory = categoryService.updateCategory(id, categoryDTO );
         return ResponseEntity.ok(updatedCategory);
     }

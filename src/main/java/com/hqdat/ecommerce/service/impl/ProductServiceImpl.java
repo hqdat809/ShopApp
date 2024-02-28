@@ -2,6 +2,7 @@ package com.hqdat.ecommerce.service.impl;
 
 import com.hqdat.ecommerce.dto.CategoryDTO;
 import com.hqdat.ecommerce.dto.ProductDTO;
+import com.hqdat.ecommerce.exception.notfound.NotFoundException;
 import com.hqdat.ecommerce.model.Category;
 import com.hqdat.ecommerce.model.Product;
 import com.hqdat.ecommerce.repository.CategoryRepository;
@@ -44,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductByID(Long productID) {
 
-        return productRepository.findById(productID).orElseThrow(() -> new RuntimeException("Product not found!!"));
+        return productRepository.findById(productID).orElseThrow(() -> new NotFoundException("Product not found!!"));
     }
 
     @Override

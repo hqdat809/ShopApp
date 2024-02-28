@@ -44,19 +44,21 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
 
-                        .requestMatchers(HttpMethod.GET,"/api/categories").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/categories").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/api/categories").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET,"/api/categories/*").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
 
-                        .requestMatchers(HttpMethod.GET,"/api/products").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/products").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/api/products").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET,"/api/products/*").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
 
                         .requestMatchers(HttpMethod.POST,"/api/orders").hasAnyAuthority("ROLE_ADMIN")
 
-                        .requestMatchers(HttpMethod.GET,"/api/order-details").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/order-details").hasAnyAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.GET,"/api/order-details/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/order-details").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/api/order-details").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/api/order-details/by-user/*").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/api/order-details/by-order/*").hasAnyAuthority("ROLE_ADMIN")
 
                         .requestMatchers("/api/auth/*").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
