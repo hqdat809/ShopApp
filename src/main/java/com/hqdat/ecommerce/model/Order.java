@@ -1,5 +1,6 @@
 package com.hqdat.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,20 +20,12 @@ public class Order {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "full_name", length = 100)
     private String fullName;
-
-    @Column(name = "email", length = 100)
-    private String email;
-
-    @Column(name = "phone_number", length = 50)
-    private String phoneNumber;
-
-    @Column(name = "address", length = 100)
-    private String address;
 
     @Column(name = "note", length = 100)
     private String note;
@@ -40,26 +33,36 @@ public class Order {
     @Column(name = "order_date")
     private Date createAt;
 
-    private Float totalMoney;
-
     @Column(name = "shipping_method", length = 100)
     private String shippingMethod;
-
-    @Column(name = "shipping_address", length = 100)
-    private String shippingAddress;
-
-    private Date shippingDate;
-
-    @Column(name = "tracking_number", length = 100)
-    private String trackingNumber;
 
     @Column(name = "payment_method", length = 100)
     private String paymentMethod;
 
+    @ManyToOne
+    @JoinColumn(name = "shipment_id")
+    private Shipment shipment;
+
+    @ManyToOne
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
+
     private boolean active;
+
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
+    private Float totalMoney;
+
+    private Date shippingDate;
 
     @PrePersist
     protected void onCreate() {
         createAt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = new Date();
     }
 };

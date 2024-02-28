@@ -1,6 +1,7 @@
 package com.hqdat.ecommerce.service.impl;
 
 import com.hqdat.ecommerce.dto.UserDTO;
+import com.hqdat.ecommerce.exception.notfound.NotFoundException;
 import com.hqdat.ecommerce.model.Role;
 import com.hqdat.ecommerce.model.User;
 import com.hqdat.ecommerce.repository.RoleRepository;
@@ -22,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     public User convertDTO(UserDTO userDTO) {
         Role existingRole = roleRepository.findById(userDTO.getRoleID())
-                .orElseThrow(() -> new RuntimeException("Role id not found"));
+                .orElseThrow(() -> new NotFoundException("Role id not found"));
 
         return User
                 .builder()
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByID(Long userID) {
         return userRepository.findById(userID)
-                .orElseThrow(() -> new RuntimeException("User not found with id user: " + userID));
+                .orElseThrow(() -> new NotFoundException("User not found with id user: " + userID));
     }
 
     @Override

@@ -12,10 +12,7 @@ public interface OrderDetailService {
 
     OrderDetail getOrderDetailByID(Long orderDetailID);
 
-    List<OrderDetail> getOrderDetailsByUser(Long userID);
     List<OrderDetail> getOrderDetailsByOrder(Long orderID);
-
-    List<OrderDetail> getOrderDetails();
 
     OrderDetail updateOrderDetail(Long orderDetailID, OrderDetailDTO orderDetailDTO);
 

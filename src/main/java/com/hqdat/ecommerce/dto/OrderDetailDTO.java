@@ -10,7 +10,6 @@ import lombok.*;
 @Builder
 public class OrderDetailDTO {
     private Long orderID;
-    private Long userID;
     private Long productID;
     private Integer quantity;
     private String color;

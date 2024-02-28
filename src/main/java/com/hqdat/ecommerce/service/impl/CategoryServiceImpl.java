@@ -1,10 +1,12 @@
 package com.hqdat.ecommerce.service.impl;
 
 import com.hqdat.ecommerce.dto.CategoryDTO;
+import com.hqdat.ecommerce.exception.notfound.NotFoundException;
 import com.hqdat.ecommerce.model.Category;
 import com.hqdat.ecommerce.repository.CategoryRepository;
 import com.hqdat.ecommerce.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.NotFound;
 import org.hibernate.query.Page;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category getCategoryByID(Long categoryID) {
         return categoryRepository.findById(categoryID)
-                .orElseThrow(() -> new RuntimeException("Category not found!!"));
+                .orElseThrow(() -> new NotFoundException("Category not found!!"));
     }
 
     @Override

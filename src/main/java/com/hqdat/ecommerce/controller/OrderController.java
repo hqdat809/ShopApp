@@ -3,6 +3,7 @@ package com.hqdat.ecommerce.controller;
 import com.hqdat.ecommerce.dto.OrderDTO;
 import com.hqdat.ecommerce.model.Order;
 import com.hqdat.ecommerce.service.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ public class OrderController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Order> createOrder(@RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<Order> createOrder(@RequestBody @Valid OrderDTO orderDTO) {
         return ResponseEntity.ok(orderService.createOrder(orderDTO));
     }
 }
